@@ -13,4 +13,26 @@ public class Solution{
 		prev = root;
 		convert(root.right)
 	}
+	public void generateCycle(ListNode root){
+		ListNode pre = root , head = root;
+		while( head.right != null ){
+			head = head.right;
+		}
+		head.right = pre;
+		pre.left = head;
+	}
+}
+
+class ListNode {
+     int val;
+     ListNode left;
+     ListNode right;
+     ListNode(int x) { val = x; }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+	TreeNode right;
+	TreeNode(int x) { val = x; }
 }
