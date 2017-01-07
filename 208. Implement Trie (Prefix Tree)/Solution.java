@@ -1,13 +1,11 @@
 class TrieNode {
-    public char val;
-    public boolean isWord;
-    public TrieNode[] children = new TrieNode[26];
+    // Initialize your data structure here.
+    TrieNode[] children;
+    String val;
+    
     public TrieNode() {
-        
-    }
-    TrieNode(char c) {
-        TrieNode node = new TrieNode();
-        node.val = c;
+        children = new TrieNode[26];
+        val = "";
     }
 }
 
@@ -16,43 +14,41 @@ public class Trie {
 
     public Trie() {
         root = new TrieNode();
-        root.val = ' '; 
     }
 
     // Inserts a word into the trie.
     public void insert(String word) {
-        TrieNode ws = root;
-        for( int i = 0 ; i< word.length(); i++ ){
-            char c = word.charAt(i);
-            if(ws.children[c-'a'] == null){
-                ws.children[c-'a'] = new TrieNode(c);
-            }
-            ws = ws.children[c-'a'];
+        TrieNode node = root;
+        
+        for(char ch: word.toCharArray()){
+            int index = ch - 'a';
+            if(node.children[index] == null) node.children[index] = new TrieNode();
+            node = node.children[index];
         }
-        ws.isWord = true;
+        
+        node.val = word;
     }
 
     // Returns if the word is in the trie.
     public boolean search(String word) {
-        TrieNode ws = root;
-        for(int i = 0 ; i < word.length(); i++ ){
-            char c = word.charAt(i);
-            if(ws.children[c-'a'] == null) return false;
-            ws = ws.children[c - 'a'];
-        }
-        return ws.isWord;
+        return isMatch(root, word, 0, false);
     }
-
+    
     // Returns if there is any word in the trie
     // that starts with the given prefix.
     public boolean startsWith(String prefix) {
-        TrieNode ws = root;
-        for( int i = 0; i< prefix.length(); i++){
-            char c = prefix.charAt(i);
-            if(ws.children[c-'a'] == null) return false;
-            ws = ws.children[c - 'a'];
+        return isMatch(root, prefix, 0, true);
+    }
+    
+    private boolean isMatch(TrieNode node, String word, int i, boolean searchPrefix){
+        if(node==null) return false;
+        if(i==word.length()){
+            if(searchPrefix) return true;
+            return node.val.equals(word);
         }
-        return true;
+        
+        int index = word.charAt(i)-'a';
+        return isMatch(node.children[index], word, i+1, searchPrefix);
     }
 }
 
