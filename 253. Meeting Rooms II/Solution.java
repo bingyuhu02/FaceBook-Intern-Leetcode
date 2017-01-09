@@ -9,10 +9,10 @@ public class Solution {
         Arrays.sort(start);
         Arrays.sort(end);
         int count = 0;
-        int e = 0; 
+        int curEnd = 0; 
         for( int i = 0 ; i < start.length ; i++){
-            if( start[i] < end[e]) count++;
-            else e++;
+            if( start[i] < end[curEnd]) count++;
+            else curEnd++;
         }
         return count;
     }
