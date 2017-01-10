@@ -1,5 +1,25 @@
 public class Solution {
     public int lengthOfLIS(int[] n) {
+        int[] tail = new int[n.length];
+        int count = 0;
+        for( int num : n ){
+            int left = 0 , right = count;
+            while( left != right  ){
+                int mid = left + (right - left ) / 2;
+                if( tail[mid] < num ){
+                    left = mid + 1;
+                } else right = mid;
+            }
+            tail[left] = num;
+            if( left == count ) ++count;
+        }
+        return count;
+    }
+}
+
+/*
+public class Solution {
+    public int lengthOfLIS(int[] n) {
         if(n == null || n.length == 0 ) return 0;
         int[] dp = new int[n.length];
         dp[0] = n[0];
@@ -30,3 +50,4 @@ public class Solution {
         else return r;
     }
 }
+*/
