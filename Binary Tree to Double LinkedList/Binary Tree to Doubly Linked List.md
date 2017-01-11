@@ -34,13 +34,6 @@ public class Solution{
 	}
 }
 
-class ListNode {
-     int val;
-     ListNode left;
-     ListNode right;
-     ListNode(int x) { val = x; }
-}
-
 class TreeNode {
     int val;
     TreeNode left;
@@ -77,3 +70,66 @@ public class Solution {
 }
 
 ```
+## Lintcode (ListNode and treenode use diffrent class)
+```
+public class Solution {
+    public DoublyListNode bstToDoublyList(TreeNode root) {  
+        if (root == null) {
+            return null;
+        }
+        //Init stack
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode node = root;    
+        stack.push(node);
+        //Create DoublyListNode header
+        DoublyListNode dummy = new DoublyListNode(0);
+        DoublyListNode dNode = dummy;
+        
+            
+        while(!stack.isEmpty()) {
+            while (node != null && node.left != null) {
+                stack.push(node.left);
+                node = node.left;
+            }
+            //add node
+            node = stack.pop();
+            DoublyListNode curr = new DoublyListNode(node.val);
+            dNode.next = curr;
+            curr.prev = dNode;
+            dNode = dNode.next;
+            
+            //check right node and add to stack
+            node = node.right;
+            if (node != null) {
+                stack.push(node);
+            }  
+        }
+        
+        return dummy.next;
+        
+    }
+}
+
+
+ * public class DoublyListNode {
+ *     int val;
+ *     DoublyListNode next, prev;
+ *     DoublyListNode(int val) {
+ *         this.val = val;
+ *         this.next = this.prev = null;
+ *     }
+ * }
+
+ 
+  * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+
+```
+
+
