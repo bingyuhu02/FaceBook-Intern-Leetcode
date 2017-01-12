@@ -72,7 +72,28 @@ public class Solution {
 * MergeSort : for 5 lists, merge List 1 and List 2 and generate List 12, merge 3 and 4 and generate List 45 , merge 12 and 3 and generate List 123, finally generate List 12345
 * Every list will be manipulated logN times
 
+## Time 
+*  I think the complexity is k * n * logk. Because the recursion depth is logK, and in each level, every element will be compared.
+
 # Code (Merge Sort)
 ```
+
+public ListNode mergeKLists(ListNode[] lists) {
+	if (lists == null || lists.length == 0)
+		return null;
+    return mergeKLists(lists, 0, lists.length - 1);
+}
+private ListNode mergeKLists(ListNode[] lists, int start, int end) {
+	if (start == end) {
+		return lists[start];
+	} else if (start < end){
+		int mid = (end - start) / 2 + start;
+		ListNode left = mergeKLists(lists, start, mid);
+		ListNode right = mergeKLists(lists, mid + 1, end);
+		return mergeTwoLists(left, right);
+	} else {
+		return null;
+	}
+}
 
 ```

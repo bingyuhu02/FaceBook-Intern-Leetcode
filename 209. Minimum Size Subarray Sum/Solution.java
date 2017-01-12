@@ -12,3 +12,16 @@ public class Solution {
         return min == Integer.MAX_VALUE ? 0:min;
     }
 }
+
+  public boolean minSubArrayLen(int[] nums, int s)  {
+        if( nums == null || nums.length == 0) return false;
+        int pre = 0 , cur = 0 , sum = 0;
+        while( cur < nums.length ){
+            sum += nums[cur++];
+            if( sum == s) return true;
+            while(sum >= s){
+                sum -= nums[pre++];
+            }
+        }
+        return false;
+    }
